@@ -1,0 +1,187 @@
+{% load static %}
+<section class="section about-me" data-section="section1">
+<div class="container">
+  <div class="col-md-9">
+       {% if messages %}
+         {% for message in messages %}
+            {% if message.tags == 'error' %}
+                <div class="alert alert-danger" role="alert">
+                    {{ message }}
+                </div>
+            {% else %}
+                <div class="alert alert-{{ message.tags }}" role="alert">
+                    {{ message }}
+                </div>
+            {% endif %}
+         {% endfor %}
+       {% endif %}
+  </div>
+  <div class="section-heading">
+    <h2>About Me</h2>
+    <div class="line-dec"></div>
+    <span
+      >Hello there. <p>My name is Nikita Kanin and im 28 y.o. Im junior back-end python developer.</p></span>
+  </div>
+  <div class="left-image-post">
+    {% for item in about_me %}
+    {% if not item.pk|divisibleby:"2" %}
+    <div class="left-image-post">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="left-image">
+          <img src="{{ item.image.url }}" alt="" width="200" height="300"/>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="right-text">
+          <h4>{{ item.title }}</h4>
+          <p>
+            {{ item.content }}
+          </p>
+        </div>
+      </div>
+    </div>
+    {% else %}
+    <div class="right-image-post">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="right-text">
+            <h4>{{ item.title }}</h4>
+            <p>
+              {{ item.content }}
+            </p>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="left-image">
+            <img src="{{ item.image.url }}" alt="" width="200" height="300"/>
+          </div>
+        </div>
+      </div>
+    <div class="right-image-post"></div>
+    {% endif %}
+    {% endfor %}
+  </div>
+</div>
+</section>
+
+<section class="section my-skills" data-section="section2">
+<div class="container">
+  <div class="section-heading">
+    <h2>My skills</h2>
+    <div class="line-dec"></div>
+  </div>
+  <div class="row">
+    {% for skill in skills %}
+    <div class="col-md-6">
+      <div class="service-item">
+        <div class="service-icon">
+          {% if skill.image %}
+          <img src="{{ skill.image.url }}" alt="" width="30" class="mr-3"/>
+          {% else %}
+          <img src="" alt="" width="30" class="mr-3"/>
+          {% endif %}
+        </div>
+        <h4>{{ skill.title }}</h4>
+        <p>
+          {{ skill.content }}
+        </p>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+</section>
+
+<section class="section my-projects" data-section="section3">
+<div class="container">
+  <div class="section-heading">
+    <h2>My projects</h2>
+    <div class="line-dec"></div>
+  </div>
+  <div class="row">
+    <div class="isotope-wrapper">
+      <form class="isotope-toolbar">
+      </form>
+      <div class="isotope-box">
+        {% for project in projects %}
+        <div class="isotope-item" data-type="nature">
+          <figure class="snip1321">
+            {% if project.image %}
+            <img src="{{ project.image.url }}" alt="sq-sample26"/>
+            {% else %}
+            <img src="" alt="sq-sample26"/>
+            {% endif %}
+            <figcaption>
+              <a href="{{ project.url }} " target="_blank"><i class="fa fa-search"></i></a>
+              <h4>{{ project.title }}</h4>
+              <span>{{ project.content }}</span>
+            </figcaption>
+          </figure>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<section class="section contact-me" data-section="section4">
+  <div class="container">
+    <div class="section-heading">
+      <h2>Contact Me</h2>
+      <div class="line-dec"></div>
+      <div class="row">
+        <div class="col-md-12">
+        </div>
+      </div>
+    </div>
+      <div class="right-content">
+        <div class="container">
+          <form id="contact" action="/contact/" method="post">
+            {% csrf_token %}
+              <div class="row">
+              {% for field in form %}
+              {% if forloop.counter < 3 %}
+              <div class="col-md-6">
+                <input
+                  name="{{ field.name }}"
+                  type="text"
+                  class="form-control"
+                  placeholder="{{ field.label }}"
+                  required=""
+                />
+              </div>
+              {% endif %}
+              {% if forloop.counter == 3 %}
+              <div class="col-md-12">
+                <input
+                  name="{{ field.name }}"
+                  type="text"
+                  class="form-control"
+                  placeholder="{{ field.label }}"
+                  required=""
+                />
+              </div>
+              {% endif %}
+              {% if forloop.counter == 4 %}
+              <div class="col-md-12">
+                <textarea
+                  name="{{ field.name }}"
+                  type="text"
+                  class="form-control"
+                  placeholder="{{ field.label }}"
+                  required=""
+                ></textarea>
+              </div>
+                {% endif %}
+              {% endfor %}
+            </div>
+            <button type="submit" id="form-submit" class="button" position="center">
+                  Send Message
+            </button>
+          </form>
+        </div>
+    </div>
+  </div>
+</section>

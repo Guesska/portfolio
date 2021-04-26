@@ -24,7 +24,7 @@ def contact_me(request):
     if request.method == 'POST':
         form = ContactForm(request.POST)
         if form.is_valid():
-            bot = telegram.Bot(token='1785871407:AAHbVK9AjhK0doFN65C1UqqlRnwr4jyi6Uk')
+            bot = telegram.Bot(token='')
             message = f'Name: {form.cleaned_data["name"]}\nE-mail: {form.cleaned_data["user_email"]}\n' \
                       f'Subject: {form.cleaned_data["subject"]}\n{form.cleaned_data["message"]}'
             bot.send_message(586551552, message)
